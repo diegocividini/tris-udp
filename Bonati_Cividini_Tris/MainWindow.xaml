@@ -1,0 +1,17 @@
+﻿<Window x:Class="Bonati_Cividini_Tris.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bonati_Cividini_Tris"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="310
+        " Width="500">
+    <Grid>
+        <Label Content="TRIS" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="36" FontStyle="Normal" FontWeight="Normal" FontFamily="Arial Black" />
+        <Label Content="Connettiti ad una partita" HorizontalAlignment="Center" Margin="0,70,0,0" VerticalAlignment="Top" FontSize="22" FontStyle="Normal" FontWeight="Bold" FontFamily="Arial" />
+        <TextBox x:Name="tb_IP_ospite" HorizontalAlignment="Center" Margin="0,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontSize="22" FontFamily="Arial" FontWeight="Normal"/>
+        <Button x:Name="button_start" Content="Connettiti ad un HOST" HorizontalAlignment="Center" Margin="0,170,0,0" Padding="5,5,5,5" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Click="button_start_Click"/>
+        <Button x:Name="button_host" Content="Fai l'host e crea una partita" HorizontalAlignment="Center" Margin="0,230,0,0" Padding="5,5,5,5" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Click="button_host_Click"/>
+    </Grid>
+</Window>
