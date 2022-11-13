@@ -35,7 +35,17 @@ namespace Bonati_Cividini_Tris
         {
             this.ip = ip;
             InitializeComponent();
-            MessageReceiver.DoWork += MessageReceiver_DoWork;
+            this.Background = new SolidColorBrush(Color.FromArgb(100, 29, 55, 19));
+            button1.Background = this.Background;
+            button2.Background = this.Background;
+            button3.Background = this.Background;
+            button4.Background = this.Background;
+            button5.Background = this.Background;
+            button6.Background = this.Background;
+            button7.Background = this.Background;
+            button8.Background = this.Background;
+            button9.Background = this.Background;
+            MessageReceiver.DoWork += new DoWorkEventHandler(MessageReceiver_DoWork);
             if (isHost)
             {
                 Giocatore = 'X';
@@ -62,12 +72,13 @@ namespace Bonati_Cividini_Tris
         }
         private void MessageReceiver_DoWork(object sender, DoWorkEventArgs e)
         {
+
             if (CheckState())
                 return;
             FreezeBoard();
-            label1.Content = "Opponent's Turn!";
+            Dispatcher.Invoke(() => label1.Content = "Opponent's Turn!");
             ReceiveMove();
-            label1.Content = "Your Trun!";
+            Dispatcher.Invoke(() => label1.Content = "Your Trun!");
             if (!CheckState())
                 UnfreezeBoard();
         }
@@ -75,237 +86,236 @@ namespace Bonati_Cividini_Tris
         private bool CheckState()
         {
             //Horizontals
-            if (button1.Content == button2.Content && button2.Content == button3.Content && button3.Content != "")
+            if (this.Dispatcher.Invoke(() => button1.Background == button2.Background && button2.Background == button3.Background && button3.Background != this.Background))
             {
-                if (button1.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button1.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
+
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
-            else if (button4.Content == button5.Content && button5.Content == button6.Content && button6.Content != "")
+            else if (Dispatcher.Invoke(() => button4.Background == button5.Background && button5.Background == button6.Background && button6.Background != this.Background))
             {
-                if (button4.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button4.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
-            else if (button7.Content == button8.Content && button8.Content == button9.Content && button9.Content != "")
+            else if (Dispatcher.Invoke(() => button7.Background == button8.Background && button8.Background == button9.Background && button9.Background != this.Background))
             {
-                if (button7.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button7.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
             //Verticals
-            else if (button1.Content == button4.Content && button4.Content == button7.Content && button7.Content != "")
+            else if (Dispatcher.Invoke(() => button1.Background == button4.Background && button4.Background == button7.Background && button7.Background != this.Background))
             {
-                if (button1.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button1.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
-            else if (button2.Content == button5.Content && button5.Content == button8.Content && button8.Content != "")
+            else if (Dispatcher.Invoke(() => button2.Background == button5.Background && button5.Background == button8.Background && button8.Background != this.Background))
             {
-                if (button2.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button2.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
-            else if (button3.Content == button6.Content && button6.Content == button9.Content && button9.Content != "")
+            else if (Dispatcher.Invoke(() => button3.Background == button6.Background && button6.Background == button9.Background && button9.Background != this.Background))
             {
-                if (button3.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button3.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
-            else if (button1.Content == button5.Content && button5.Content == button9.Content && button9.Content != "")
+            else if (Dispatcher.Invoke(() => button1.Background == button5.Background && button5.Background == button9.Background && button9.Background != this.Background))
             {
-                if (button1.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button1.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
-            else if (button3.Content == button5.Content && button5.Content == button7.Content && button7.Content != "")
+            else if (Dispatcher.Invoke(() => button3.Background == button5.Background && button5.Background == button7.Background && button7.Background != this.Background))
             {
-                if (button3.Content.ToString().Contains(Giocatore))
+                if (Dispatcher.Invoke(() => button3.Content.ToString() == Giocatore.ToString()))
                 {
-                    label1.Content = "You Won!";
+                    Dispatcher.Invoke(() => label1.Content = "You Won!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Won!");
                 }
                 else
                 {
-                    label1.Content = "You Lost!";
+                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-                    MessageBox.Show("You Lost!");
                 }
+                FreezeBoard();
                 return true;
             }
 
             //Draw
-            else if (button1.Content.ToString() != "" && button2.Content.ToString() != "" && button3.Content.ToString() != "" && button4.Content.ToString() != "" && button5.Content.ToString() != "" && button6.Content.ToString() != "" && button7.Content.ToString() != "" && button8.Content.ToString() != "" && button9.Content.ToString() != "")
+            else if (Dispatcher.Invoke(() => button1.Background != this.Background && button2.Background != this.Background  && button3.Background != this.Background && button4.Background != this.Background && button5.Background != this.Background && button6.Background != this.Background && button7.Background != this.Background && button8.Background != this.Background && button9.Background != this.Background))
             {
-                label1.Content = "It's a draw!";
+                Dispatcher.Invoke(() => label1.Content = "You it's a draw!");
                 if (Giocatore == 'X')
                     server.Close();
                 if (Giocatore == 'O')
                     client.Close();
-                MessageBox.Show("It's a draw!");
+                FreezeBoard();
                 return true;
             }
             return false;
         }
         private void FreezeBoard()
         {
-            button1.IsEnabled = false;
-            button2.IsEnabled = false;
-            button3.IsEnabled = false;
-            button4.IsEnabled = false;
-            button5.IsEnabled = false;
-            button6.IsEnabled = false;
-            button7.IsEnabled = false;
-            button8.IsEnabled = false;
-            button9.IsEnabled = false;
+            Dispatcher.Invoke(() =>
+            {
+                button1.IsHitTestVisible = false;
+                button2.IsHitTestVisible = false;
+                button3.IsHitTestVisible = false;
+                button4.IsHitTestVisible = false;
+                button5.IsHitTestVisible = false;
+                button6.IsHitTestVisible = false;
+                button7.IsHitTestVisible = false;
+                button8.IsHitTestVisible = false;
+                button9.IsHitTestVisible = false;
+            });
         }
 
         private void UnfreezeBoard()
         {
-            if (button1.Content.ToString() == "")
-                button1.IsEnabled = true;
-            if (button2.Content.ToString() == "")
-                button2.IsEnabled = true;
-            if (button3.Content.ToString() == "")
-                button3.IsEnabled = true;
-            if (button4.Content.ToString() == "")
-                button4.IsEnabled = true;
-            if (button5.Content.ToString() == "")
-                button5.IsEnabled = true;
-            if (button6.Content.ToString() == "")
-                button6.IsEnabled = true;
-            if (button7.Content.ToString() == "")
-                button7.IsEnabled = true;
-            if (button8.Content.ToString() == "")
-                button8.IsEnabled = true;
-            if (button9.Content.ToString() == "")
-                button9.IsEnabled = true;
+            Dispatcher.Invoke(() =>
+            {
+                if (button1.Background != Brushes.Red)
+                    button1.IsHitTestVisible = true;
+                if (button2.Background != Brushes.Red)
+                    button2.IsHitTestVisible = true;
+                if (button3.Background != Brushes.Red)
+                    button3.IsHitTestVisible = true;
+                if (button4.Background != Brushes.Red)
+                    button4.IsHitTestVisible = true;
+                if (button5.Background != Brushes.Red)
+                    button5.IsHitTestVisible = true;
+                if (button6.Background != Brushes.Red)
+                    button6.IsHitTestVisible = true;
+                if (button7.Background != Brushes.Red)
+                    button7.IsHitTestVisible = true;
+                if (button8.Background != Brushes.Red)
+                    button8.IsHitTestVisible = true;
+                if (button9.Background != Brushes.Red)
+                    button9.IsHitTestVisible = true;
+            });
         }
 
         private void ReceiveMove()
@@ -314,27 +324,26 @@ namespace Bonati_Cividini_Tris
             byte[] buffer = new byte[1];
             buffer = Giocatore == 'X' ? server.Receive(ref ep) : client.Receive(ref ep);
             if (buffer[0] == 1)
-                button1.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button1.Background = Brushes.Red);
             if (buffer[0] == 2)
-                button2.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button2.Background = Brushes.Red);
             if (buffer[0] == 3)
-                button3.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button3.Background = Brushes.Red);
             if (buffer[0] == 4)
-                button4.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button4.Background = Brushes.Red);
             if (buffer[0] == 5)
-                button5.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button5.Background = Brushes.Red);
             if (buffer[0] == 6)
-                button6.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button6.Background = Brushes.Red);
             if (buffer[0] == 7)
-                button7.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button7.Background = Brushes.Red);
             if (buffer[0] == 8)
-                button8.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button8.Background = Brushes.Red);
             if (buffer[0] == 9)
-                button9.Content = Avversario.ToString();
+                Dispatcher.Invoke(() => button9.Background = Brushes.Red);
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, RoutedEventArgs e)
         {
             IPEndPoint ep = new IPEndPoint(ip, porta);
             byte[] num = { 1 };
@@ -346,10 +355,11 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button1.Content = Giocatore.ToString();
+            button1.Background = Brushes.Green;
+            button1.Foreground = button1.Background;
+            button1.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             IPEndPoint ep = new IPEndPoint(ip, porta);
@@ -362,7 +372,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button2.Content = Giocatore.ToString();
+            button2.Background = Brushes.Green;
+            button2.Foreground = button2.Background;
+            button2.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
 
@@ -378,7 +390,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button3.Content = Giocatore.ToString();
+            button3.Background = Brushes.Green;
+            button3.Foreground = button3.Background;
+            button3.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
 
@@ -394,7 +408,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button4.Content = Giocatore.ToString();
+            button4.Background = Brushes.Green;
+            button4.Foreground = button4.Background;
+            button4.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
 
@@ -410,7 +426,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button5.Content = Giocatore.ToString();
+            button5.Background = Brushes.Green;
+            button5.Foreground = button5.Background;
+            button5.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
 
@@ -426,7 +444,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button6.Content = Giocatore.ToString();
+            button6.Background = Brushes.Green;
+            button6.Foreground = button6.Background;
+            button6.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
 
@@ -442,7 +462,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button7.Content = Giocatore.ToString();
+            button7.Background = Brushes.Green;
+            button7.Foreground = button7.Background;
+            button7.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
 
@@ -458,7 +480,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button8.Content = Giocatore.ToString();
+            button8.Background = Brushes.Green;
+            button8.Foreground = button8.Background;
+            button8.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
 
@@ -474,7 +498,9 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button9.Content = Giocatore.ToString();
+            button9.Background = Brushes.Green;
+            button9.Foreground = button9.Background;
+            button9.Content = Giocatore;
             MessageReceiver.RunWorkerAsync();
         }
     }

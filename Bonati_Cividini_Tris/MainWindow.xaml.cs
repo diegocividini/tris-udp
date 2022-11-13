@@ -41,14 +41,15 @@ namespace Bonati_Cividini_Tris
             client = new UdpClient(13000);
             IPEndPoint ep = new IPEndPoint(ipsender, 12000);
             var hostname = Dns.GetHostName();
-            string myIP = Dns.GetHostByName(hostname).AddressList[0].ToString();
+            string myIP = Dns.GetHostEntry(hostname).AddressList.First(addr => addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
             byte[] buf = Encoding.ASCII.GetBytes(myIP.ToString());
             client.Send(buf, buf.Length, ep);
             Gioco nuovaPartita = new Gioco(false, ipsender);
             this.Visibility = Visibility.Hidden;
+            this.Close();
             if (!nuovaPartita.IsVisible == false)
                 nuovaPartita.ShowDialog();
-            Visibility = Visibility.Visible;
+            nuovaPartita.Visibility = Visibility.Visible;
             client.Close();
         }
 
@@ -56,16 +57,18 @@ namespace Bonati_Cividini_Tris
         {
             byte[] buffer;
             client2 = new UdpClient(12000);
-            IPEndPoint ep = new IPEndPoint(IPAddress.Any, 0);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Any, 12000);
             do
             {
                 buffer = client2.Receive(ref ep);
             } while (client2.Available < 0);
+            string ipProva = Encoding.ASCII.GetString(buffer);
             var ipGiocatore2 = IPAddress.Parse(Encoding.ASCII.GetString(buffer));
             if (ipGiocatore2 != null)
             {
                 Gioco nuovaPartita = new Gioco(true, ipGiocatore2);
                 this.Visibility = Visibility.Hidden;
+                this.Close();
                 if (!nuovaPartita.IsVisible == false)
                     nuovaPartita.ShowDialog();
                 nuovaPartita.Visibility = Visibility.Visible;
