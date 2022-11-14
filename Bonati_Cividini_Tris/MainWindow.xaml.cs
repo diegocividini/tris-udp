@@ -62,7 +62,6 @@ namespace Bonati_Cividini_Tris
             {
                 buffer = client2.Receive(ref ep);
             } while (client2.Available < 0);
-            string ipProva = Encoding.ASCII.GetString(buffer);
             var ipGiocatore2 = IPAddress.Parse(Encoding.ASCII.GetString(buffer));
             if (ipGiocatore2 != null)
             {

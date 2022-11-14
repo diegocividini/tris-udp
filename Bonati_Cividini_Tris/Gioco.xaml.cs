@@ -30,7 +30,7 @@ namespace Bonati_Cividini_Tris
         private UdpClient server = null;
         private char Giocatore;
         private char Avversario;
-        private BackgroundWorker MessageReceiver = new BackgroundWorker();
+        private BackgroundWorker RicevitoreMossa = new BackgroundWorker();
         public Gioco(bool isHost, IPAddress ip = null)
         {
             this.ip = ip;
@@ -45,7 +45,7 @@ namespace Bonati_Cividini_Tris
             button7.Background = this.Background;
             button8.Background = this.Background;
             button9.Background = this.Background;
-            MessageReceiver.DoWork += new DoWorkEventHandler(MessageReceiver_DoWork);
+            RicevitoreMossa.DoWork += new DoWorkEventHandler(CheckRiceviMossa);
             if (isHost)
             {
                 Giocatore = 'X';
@@ -61,7 +61,7 @@ namespace Bonati_Cividini_Tris
                 try
                 {
                     client = new UdpClient(11000);
-                    MessageReceiver.RunWorkerAsync();
+                    RicevitoreMossa.RunWorkerAsync();
                 }
                 catch (Exception ex)
                 {
@@ -70,36 +70,35 @@ namespace Bonati_Cividini_Tris
                 }
             }
         }
-        private void MessageReceiver_DoWork(object sender, DoWorkEventArgs e)
+        private void CheckRiceviMossa(object sender, DoWorkEventArgs e)
         {
 
             if (CheckState())
                 return;
             FreezeBoard();
-            Dispatcher.Invoke(() => label1.Content = "Opponent's Turn!");
-            ReceiveMove();
-            Dispatcher.Invoke(() => label1.Content = "Your Trun!");
+            Dispatcher.Invoke(() => label1.Content = "Turno dell'avversario!");
+            RiceviMossa();
+            Dispatcher.Invoke(() => label1.Content = "Tuo turno!");
             if (!CheckState())
                 UnfreezeBoard();
         }
 
         private bool CheckState()
         {
-            //Horizontals
+            //Controllo per la vittoria orizzontale 
             if (this.Dispatcher.Invoke(() => button1.Background == button2.Background && button2.Background == button3.Background && button3.Background != this.Background))
             {
                 if (Dispatcher.Invoke(() => button1.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
                         client.Close();
-
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -113,7 +112,7 @@ namespace Bonati_Cividini_Tris
             {
                 if (Dispatcher.Invoke(() => button4.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -121,7 +120,7 @@ namespace Bonati_Cividini_Tris
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -135,7 +134,7 @@ namespace Bonati_Cividini_Tris
             {
                 if (Dispatcher.Invoke(() => button7.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -143,7 +142,7 @@ namespace Bonati_Cividini_Tris
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -153,12 +152,12 @@ namespace Bonati_Cividini_Tris
                 return true;
             }
 
-            //Verticals
+            //Controllo per la vittoria verticale
             else if (Dispatcher.Invoke(() => button1.Background == button4.Background && button4.Background == button7.Background && button7.Background != this.Background))
             {
                 if (Dispatcher.Invoke(() => button1.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -166,7 +165,7 @@ namespace Bonati_Cividini_Tris
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -180,7 +179,7 @@ namespace Bonati_Cividini_Tris
             {
                 if (Dispatcher.Invoke(() => button2.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -188,7 +187,7 @@ namespace Bonati_Cividini_Tris
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -202,7 +201,7 @@ namespace Bonati_Cividini_Tris
             {
                 if (Dispatcher.Invoke(() => button3.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -210,7 +209,7 @@ namespace Bonati_Cividini_Tris
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -219,12 +218,12 @@ namespace Bonati_Cividini_Tris
                 FreezeBoard();
                 return true;
             }
-
+            //Controllo per la vittoria obliqua
             else if (Dispatcher.Invoke(() => button1.Background == button5.Background && button5.Background == button9.Background && button9.Background != this.Background))
             {
                 if (Dispatcher.Invoke(() => button1.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -232,7 +231,7 @@ namespace Bonati_Cividini_Tris
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -246,7 +245,7 @@ namespace Bonati_Cividini_Tris
             {
                 if (Dispatcher.Invoke(() => button3.Content.ToString() == Giocatore.ToString()))
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Won!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Vinto!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -254,7 +253,7 @@ namespace Bonati_Cividini_Tris
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => label1.Content = "You Lost!");
+                    Dispatcher.Invoke(() => label1.Content = "Hai Perso!");
                     if (Giocatore == 'X')
                         server.Close();
                     if (Giocatore == 'O')
@@ -264,7 +263,7 @@ namespace Bonati_Cividini_Tris
                 return true;
             }
 
-            //Draw
+            //Controllo per il pareggio
             else if (Dispatcher.Invoke(() => button1.Background != this.Background && button2.Background != this.Background  && button3.Background != this.Background && button4.Background != this.Background && button5.Background != this.Background && button6.Background != this.Background && button7.Background != this.Background && button8.Background != this.Background && button9.Background != this.Background))
             {
                 Dispatcher.Invoke(() => label1.Content = "You it's a draw!");
@@ -297,50 +296,50 @@ namespace Bonati_Cividini_Tris
         {
             Dispatcher.Invoke(() =>
             {
-                if (button1.Background != Brushes.Red)
+                if (button1.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button1.IsHitTestVisible = true;
-                if (button2.Background != Brushes.Red)
+                if (button2.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button2.IsHitTestVisible = true;
-                if (button3.Background != Brushes.Red)
+                if (button3.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button3.IsHitTestVisible = true;
-                if (button4.Background != Brushes.Red)
+                if (button4.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button4.IsHitTestVisible = true;
-                if (button5.Background != Brushes.Red)
+                if (button5.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button5.IsHitTestVisible = true;
-                if (button6.Background != Brushes.Red)
+                if (button6.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button6.IsHitTestVisible = true;
-                if (button7.Background != Brushes.Red)
+                if (button7.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button7.IsHitTestVisible = true;
-                if (button8.Background != Brushes.Red)
+                if (button8.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button8.IsHitTestVisible = true;
-                if (button9.Background != Brushes.Red)
+                if (button9.Background != new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)))
                     button9.IsHitTestVisible = true;
             });
         }
 
-        private void ReceiveMove()
+        private void RiceviMossa()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Any, Giocatore == 'X' ? 10000 : 11000);
             byte[] buffer = new byte[1];
             buffer = Giocatore == 'X' ? server.Receive(ref ep) : client.Receive(ref ep);
             if (buffer[0] == 1)
-                Dispatcher.Invoke(() => button1.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button1.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button1.Content = Avversario.ToString(); });
             if (buffer[0] == 2)
-                Dispatcher.Invoke(() => button2.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button2.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button2.Content = Avversario.ToString(); });
             if (buffer[0] == 3)
-                Dispatcher.Invoke(() => button3.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button3.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button3.Content = Avversario.ToString(); });
             if (buffer[0] == 4)
-                Dispatcher.Invoke(() => button4.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button4.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button4.Content = Avversario.ToString(); });
             if (buffer[0] == 5)
-                Dispatcher.Invoke(() => button5.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button5.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button5.Content = Avversario.ToString(); });
             if (buffer[0] == 6)
-                Dispatcher.Invoke(() => button6.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button6.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button6.Content = Avversario.ToString(); });
             if (buffer[0] == 7)
-                Dispatcher.Invoke(() => button7.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button7.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button7.Content = Avversario.ToString(); });
             if (buffer[0] == 8)
-                Dispatcher.Invoke(() => button8.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button8.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button8.Content = Avversario.ToString(); });
             if (buffer[0] == 9)
-                Dispatcher.Invoke(() => button9.Background = Brushes.Red);
+                Dispatcher.Invoke(() => { button9.Background = new SolidColorBrush(Color.FromArgb(100, 250, 70, 70)); button9.Content = Avversario.ToString(); });
 
         }
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -355,10 +354,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button1.Background = Brushes.Green;
-            button1.Foreground = button1.Background;
+            button1.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button1.Foreground = Brushes.White;
             button1.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -372,10 +371,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button2.Background = Brushes.Green;
-            button2.Foreground = button2.Background;
+            button2.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button2.Foreground = Brushes.White;
             button2.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -390,10 +389,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button3.Background = Brushes.Green;
-            button3.Foreground = button3.Background;
+            button3.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button3.Foreground = Brushes.White;
             button3.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -408,10 +407,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button4.Background = Brushes.Green;
-            button4.Foreground = button4.Background;
+            button4.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button4.Foreground = Brushes.White;
             button4.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -426,10 +425,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button5.Background = Brushes.Green;
-            button5.Foreground = button5.Background;
+            button5.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button5.Foreground = Brushes.White;
             button5.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -444,10 +443,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button6.Background = Brushes.Green;
-            button6.Foreground = button6.Background;
+            button6.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button6.Foreground = Brushes.White;
             button6.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -462,10 +461,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button7.Background = Brushes.Green;
-            button7.Foreground = button7.Background;
+            button7.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button7.Foreground = Brushes.White;
             button7.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -480,10 +479,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button8.Background = Brushes.Green;
-            button8.Foreground = button8.Background;
+            button8.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button8.Foreground = Brushes.White;
             button8.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -498,10 +497,10 @@ namespace Bonati_Cividini_Tris
             {
                 client.Send(num, num.Length, ep);
             }
-            button9.Background = Brushes.Green;
-            button9.Foreground = button9.Background;
+            button9.Background = new SolidColorBrush(Color.FromArgb(100,95,186,60));
+            button9.Foreground = Brushes.White;
             button9.Content = Giocatore;
-            MessageReceiver.RunWorkerAsync();
+            RicevitoreMossa.RunWorkerAsync();
         }
     }
 }
