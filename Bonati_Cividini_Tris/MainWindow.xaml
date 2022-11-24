@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bonati_Cividini_Tris"
         mc:Ignorable="d"
-        Title="TRIS - Inizia una nuova partita" Height="310" Width="500" MinHeight="310" MinWidth="500" MaxHeight="310" MaxWidth="500" Icon="/tic-tac-toe.png">
-    <Grid Background="#FF1D3713">
+        Title="TRIS - Inizia una nuova partita" Height="415" Width="500" MinHeight="415" MinWidth="500" MaxHeight="415" MaxWidth="500" Icon="/tic-tac-toe.png">
+    <Grid Background="#FF1D3713" Margin="0,0,0,-105">
         <Label Content="TRIS" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontSize="42" FontStyle="Normal" FontWeight="Bold" FontFamily="Arial" RenderTransformOrigin="0.495,0.293" Foreground="White" />
         <Button x:Name="button_host" Content="HOST - Crea la partita" HorizontalAlignment="Center" Margin="0,87,0,0" Padding="5,5,5,5" VerticalAlignment="Top" FontFamily="Arial" FontSize="26" Click="button_host_Click" Background="#FF248C80" BorderBrush="{x:Null}" Foreground="White" FontWeight="Normal" FontStyle="Normal"/>
         <TextBox x:Name="tb_IP_ospite" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" FontSize="16" FontFamily="Arial" FontWeight="Normal" Margin="0,189,0,0" Background="{x:Null}" Foreground="White" BorderBrush="#FF418C24" Height="30"/>
         <Button x:Name="button_start" Content="Aggiungiti ad una partita esistente" HorizontalAlignment="Center" Margin="0,228,0,0" Padding="5,5,5,5" VerticalAlignment="Top" FontFamily="Arial" FontSize="16" Click="button_start_Click" Background="#FF418C24" BorderBrush="{x:Null}" Foreground="White" FontWeight="Normal" FontStyle="Normal" Height="34"/>
         <Label Content="Inserisci l'indirizzo IP dell'host" HorizontalAlignment="Center" Margin="0,154,0,0" VerticalAlignment="Top" FontSize="16" FontStyle="Normal" FontWeight="Normal" FontFamily="Arial" Foreground="White" Height="30" />
+        <Label Content="Nickname" HorizontalAlignment="Center" Margin="0,283,0,0" VerticalAlignment="Top" FontSize="16" FontStyle="Normal" FontWeight="Normal" FontFamily="Arial" Foreground="White" Height="30" />
+        <TextBox x:Name="tb_Nickname" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Width="230" FontSize="16" FontFamily="Arial" FontWeight="Normal" Margin="0,318,0,0" Background="{x:Null}" Foreground="White" BorderBrush="#FF418C24" Height="30"/>
     </Grid>
 </Window>

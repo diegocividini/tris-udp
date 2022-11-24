@@ -21,6 +21,7 @@ namespace Bonati_Cividini_Tris
     {
         private UdpClient client2;
         private UdpClient client;
+        private string NickServer, NickClient;
         IPAddress ipsender;
         public MainWindow()
         {
@@ -38,13 +39,14 @@ namespace Bonati_Cividini_Tris
                 MessageBox.Show(ex.Message);
                 return;
             }
+            NickClient = tb_Nickname.Text==""?"Giocatore1":tb_Nickname.Text;
             client = new UdpClient(13000);
             IPEndPoint ep = new IPEndPoint(ipsender, 12000);
             var hostname = Dns.GetHostName();
             string myIP = Dns.GetHostEntry(hostname).AddressList.First(addr => addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
             byte[] buf = Encoding.ASCII.GetBytes(myIP.ToString());
             client.Send(buf, buf.Length, ep);
-            Gioco nuovaPartita = new Gioco(false, ipsender);
+            Gioco nuovaPartita = new Gioco(false, ipsender, NickClient);
             this.Visibility = Visibility.Hidden;
             this.Close();
             if (!nuovaPartita.IsVisible == false)
@@ -56,6 +58,7 @@ namespace Bonati_Cividini_Tris
         private void button_host_Click(object sender, RoutedEventArgs e)
         {
             byte[] buffer;
+            NickServer = tb_Nickname.Text == "" ? NickServer = "Giocatore2" :tb_Nickname.Text;
             client2 = new UdpClient(12000);
             IPEndPoint ep = new IPEndPoint(IPAddress.Any, 12000);
             do
@@ -65,7 +68,7 @@ namespace Bonati_Cividini_Tris
             var ipGiocatore2 = IPAddress.Parse(Encoding.ASCII.GetString(buffer));
             if (ipGiocatore2 != null)
             {
-                Gioco nuovaPartita = new Gioco(true, ipGiocatore2);
+                Gioco nuovaPartita = new Gioco(true, ipGiocatore2, NickServer);
                 this.Visibility = Visibility.Hidden;
                 this.Close();
                 if (!nuovaPartita.IsVisible == false)
